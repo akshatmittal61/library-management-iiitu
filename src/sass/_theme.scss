@@ -1,0 +1,99 @@
+:root,
+:root::before,
+:root::after {
+    --bgcolor: #f0f0f0;
+    --bgcolor-400: #d2d2d2;
+    --bgcolor-100: #e1e1e1;
+    --bgcolor-700: #c3c3c3;
+
+    --tcolor: #011627;
+    --tcolor-100: #333333;
+    --tcolor-400: #272727;
+    --tcolor-700: #1d1d1d;
+
+    --favicon: #5385cd;
+    --office-blue: #17395a;
+    --white: #ffffff;
+    --black: #000000;
+    --dark: #011627;
+    --social-color: #3f51b5;
+}
+
+.light {
+    --bgcolor: #f0f0f0;
+    --bgcolor-400: #d2d2d2;
+    --bgcolor-100: #e1e1e1;
+    --bgcolor-700: #c3c3c3;
+
+    --tcolor: #011627;
+    --tcolor-100: #333333;
+    --tcolor-400: #272727;
+    --tcolor-700: #1d1d1d;
+
+    --back-shadow: rgba(0, 0, 0, 0.2);
+    --back-shadow-light: rgba(0, 0, 0, 0.1);
+    --back-shadow-dark: rgba(0, 0, 0, 0.25);
+
+    --shadow-3d: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+        0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+        0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+        0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+    --shadow-elevation-2dp: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+        0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    --shadow-elevation-4dp: 0 4px 5px 0 rgba(0, 0, 0, 0.14),
+        0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+    --shadow-elevation-6dp: 0 6px 10px 0 rgba(0, 0, 0, 0.14),
+        0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.4);
+    --shadow-elevation-8dp: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+        0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.4);
+    --shadow-elevation-12dp: 0 12px 16px 1px rgba(0, 0, 0, 0.14),
+        0 4px 22px 3px rgba(0, 0, 0, 0.12), 0 6px 7px -4px rgba(0, 0, 0, 0.4);
+    --shadow-elevation-16dp: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
+        0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
+    --shadow-elevation-24dp: 0 24px 38px 3px rgba(0, 0, 0, 0.14),
+        0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.4);
+}
+
+.dark {
+    --bgcolor: #011627;
+    --bgcolor-100: #333333;
+    --bgcolor-400: #272727;
+    --bgcolor-700: #1d1d1d;
+
+    --tcolor: #f0f0f0;
+    --tcolor-400: #d2d2d2;
+    --tcolor-100: #e1e1e1;
+    --tcolor-700: #c3c3c3;
+
+    --back-shadow: rgba(255, 255, 255, 0.2);
+    --back-shadow-light: rgba(255, 255, 255, 0.1);
+    --back-shadow-dark: rgba(255, 255, 255, 0.25);
+
+    --shadow-3d: 0 2.8px 2.2px rgba(255, 255, 255, 0.034),
+        0 6.7px 5.3px rgba(255, 255, 255, 0.048),
+        0 12.5px 10px rgba(255, 255, 255, 0.06),
+        0 22.3px 17.9px rgba(255, 255, 255, 0.072),
+        0 41.8px 33.4px rgba(255, 255, 255, 0.086),
+        0 100px 80px rgba(255, 255, 255, 0.12);
+    --shadow-elevation-2dp: 0 2px 2px 0 rgba(255, 255, 255, 0.14),
+        0 1px 5px 0 rgba(255, 255, 255, 0.12),
+        0 3px 1px -2px rgba(255, 255, 255, 0.2);
+    --shadow-elevation-4dp: 0 4px 5px 0 rgba(255, 255, 255, 0.14),
+        0 1px 10px 0 rgba(255, 255, 255, 0.12),
+        0 2px 4px -1px rgba(255, 255, 255, 0.4);
+    --shadow-elevation-6dp: 0 6px 10px 0 rgba(255, 255, 255, 0.14),
+        0 1px 18px 0 rgba(255, 255, 255, 0.12),
+        0 3px 5px -1px rgba(255, 255, 255, 0.4);
+    --shadow-elevation-8dp: 0 8px 10px 1px rgba(255, 255, 255, 0.14),
+        0 3px 14px 2px rgba(255, 255, 255, 0.12),
+        0 5px 5px -3px rgba(255, 255, 255, 0.4);
+    --shadow-elevation-12dp: 0 12px 16px 1px rgba(255, 255, 255, 0.14),
+        0 4px 22px 3px rgba(255, 255, 255, 0.12),
+        0 6px 7px -4px rgba(255, 255, 255, 0.4);
+    --shadow-elevation-16dp: 0 16px 24px 2px rgba(255, 255, 255, 0.14),
+        0 6px 30px 5px rgba(255, 255, 255, 0.12),
+        0 8px 10px -5px rgba(255, 255, 255, 0.4);
+    --shadow-elevation-24dp: 0 24px 38px 3px rgba(255, 255, 255, 0.14),
+        0 9px 46px 8px rgba(255, 255, 255, 0.12),
+        0 11px 15px -7px rgba(255, 255, 255, 0.4);
+}

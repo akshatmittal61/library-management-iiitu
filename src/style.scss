@@ -1,0 +1,134 @@
+@import url("https://fonts.googleapis.com/css2?family=Cabin&family=Montserrat&family=Open+Sans&family=Roboto&family=Sacramento&display=swap");
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    transition: all 0.1s ease-in-out;
+}
+
+@import "./sass/shadows";
+@import "./sass/colors";
+@import "./sass/presets";
+@import "./sass/theme";
+
+:root,
+:root::before,
+:root::after {
+    --transition-time: 200ms;
+    --head-height: 10vh;
+    --side-width: 341.5px;
+    --blue: #4285f4;
+    --red: #ea4335;
+    --yellow: #fbbc05;
+    --green: #34a853;
+}
+
+@import "./sass/config";
+@import "./sass/responsive";
+@import "./sass/variables";
+@import "./sass/fonts";
+
+html {
+    font-size: 16px;
+
+    @include responsive(tablet) {
+        font-size: 14px;
+    }
+
+    @include responsive(mobile) {
+        font-size: 12px;
+    }
+}
+
+body {
+    font-family: var(--font-google-sans);
+    background-color: var(--bgcolor);
+    color: var(--tcolor);
+    font-size: 1rem;
+    letter-spacing: 0.025rem;
+    word-spacing: 0.25rem;
+    line-height: 1.25rem;
+    transition: all var(--transition-time) ease-in-out;
+    overflow-x: hidden;
+    position: relative;
+    transition: all var(--transition-time) ease-in-out;
+}
+
+svg {
+    overflow: visible;
+}
+
+a,
+button,
+input,
+textarea,
+select {
+    all: unset;
+}
+
+a {
+    cursor: pointer;
+}
+
+button {
+    cursor: pointer;
+    user-select: none;
+}
+
+input,
+textarea,
+select {
+    &::placeholder {
+        user-select: none;
+    }
+
+    &:-webkit-autofill {
+        background-color: rgba(0, 0, 0, 0.01);
+        box-shadow: inset;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: rgba(0, 0, 0, 0.01);
+    border: 4px solid transparent;
+
+    &-track {
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    &-thumb {
+        background-color: rgba(0, 153, 255, 0.75);
+        border-radius: 500px;
+
+        &:hover {
+            background-color: rgba(0, 153, 255, 1);
+        }
+
+        &:hover {
+            background-color: rgba(0, 153, 255, 0.5);
+        }
+    }
+}
+
+.material-symbols-outlined {
+    user-select: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+::selection {
+    background-color: var(--green);
+    color: var(--bgcolor);
+}
+
+.dispn {
+    display: none !important;
+}
