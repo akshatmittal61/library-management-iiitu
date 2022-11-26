@@ -73,4 +73,14 @@ const login = async (req, res) => {
 	}
 };
 
-export { register, login };
+const verifyUser = async (req, res) => {
+	try {
+		const user = await User.findById(req.user.id).select("-password");
+		return res.json({ user, message: "User Verified" });
+	} catch (error) {
+		console.error(error);
+		return res.status(500).json({ message: "Server Error" });
+	}
+};
+
+export { register, login, verifyUser };

@@ -4,10 +4,7 @@ import { USER_ROLES } from "../models/User.mjs";
 
 const auth = (req, res, next) => {
 	const token = req.header("x-auth-token");
-	if (!token)
-		return res
-			.status(401)
-			.json({ message: "No Token. Authorization denied" });
+	if (!token) return res.status(401).json({ message: "Login to continue" });
 	try {
 		const decoded = jwt.verify(token, jwtSecret);
 		req.user = decoded.user;
