@@ -78,4 +78,26 @@ const editBook = async (req, res) => {
 	}
 };
 
-export { getAllBooks, getBookById, addBook, editBook };
+const removeBook = async (req, res) => {
+	const { id } = req.params;
+	try {
+		const foundBook = await Book.findById(id);
+		if (!foundBook)
+			return res
+				.status(404)
+				.json({ message: "Couldn't find the book you searched for" });
+		await Book.findByIdAndDelete(id);
+		return res
+			.status(200)
+			.json({ message: "Removed book from the library" });
+	} catch (error) {
+		console.error(error);
+		if (error.kind === "ObjectId")
+			return res
+				.status(404)
+				.json({ message: "Couldn't find the book you searched for" });
+		return res.status(500).json({ message: "Internal Server Error" });
+	}
+};
+
+export { getAllBooks, getBookById, addBook, editBook, removeBook };
