@@ -8,6 +8,13 @@ const auth = (req, res, next) => {
 	try {
 		const decoded = jwt.verify(token, jwtSecret);
 		req.user = decoded.user;
+		if (!req.user.verified)
+			return res
+				.status(401)
+				.json({
+					message:
+						"You are not verified, wait for admin to verify you",
+				});
 		next();
 	} catch (err) {
 		console.error(err);

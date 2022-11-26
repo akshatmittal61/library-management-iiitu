@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { verifyUserByAdmin } from "../controllers/admin";
+import { verifyUserByAdmin } from "../controllers/admin.mjs";
 import { isAdmin } from "../middleware/auth.mjs";
 
 const router = Router();

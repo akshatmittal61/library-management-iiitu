@@ -7,21 +7,7 @@ const register = async (req, res) => {
 	const { name, email, phone, password, role } = req.body;
 	if (!name || !email || !phone || !password)
 		return res.status(400).json({ message: "Invalid Data" });
-	if (password.length < 6)
-		return res
-			.status(400)
-			.json({ message: "Password should be a minimum 6 characters" });
 	try {
-		if (!email.includes("@") || !email.includes("."))
-			return res.status(400).json({ message: "Invalid Email" });
-		else if (email.indexOf("@") > email.indexOf("."))
-			return res.status(400).json({ message: "Invalid Email" });
-		else if (phone.length !== 10)
-			return res.status(400).json({ message: "Invalid Phone Number" });
-		if (email.slice(email.length - 12, email.length) !== "@iiitu.ac.in")
-			return res.status(400).json({
-				message: "Please use your institute email to register",
-			});
 		let user = await User.findOne({ email });
 		if (user) {
 			console.info("user", user);
@@ -62,6 +48,10 @@ const login = async (req, res) => {
 		const isMatch = await bcrypt.compare(password, user.password);
 		if (!isMatch)
 			return res.status(400).json({ message: "Invalid Credentials" });
+		if (!user.verified)
+			return res
+				.status(401)
+				.json({ message: "Wait for admin to verify you" });
 		const payload = { user: { id: user.id } };
 		jwt.sign(payload, jwtSecret, { expiresIn: 3600000 }, (err, token) => {
 			if (err) throw err;
