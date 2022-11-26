@@ -27,4 +27,27 @@ const getBookById = async (req, res) => {
 	}
 };
 
-export { getAllBooks, getBookById };
+const addBook = async (req, res, next) => {
+	try {
+		const { title, author, price, copies } = req.body;
+		if (!title || !author || !price)
+			return res
+				.status(400)
+				.json({ message: "Please Fill All the Fields" });
+		const book = new Book({
+			title,
+			author,
+			price,
+			copies: copies ? copies : 1,
+		});
+		await book.save();
+		return res
+			.status(201)
+			.json({ message: "Added new book to the Database" });
+	} catch (error) {
+		console.error(error);
+		return res.status(500).json({ message: "Internal Server Error" });
+	}
+};
+
+export { getAllBooks, getBookById, addBook };
