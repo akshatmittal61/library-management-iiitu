@@ -1,4 +1,6 @@
 import Book from "../models/Book.mjs";
+import User from "../models/User.mjs";
+import { getUserById } from "../services/user.mjs";
 
 const getAllBooks = async (req, res) => {
 	try {
@@ -103,4 +105,111 @@ const removeBook = async (req, res) => {
 	}
 };
 
-export { getAllBooks, getBookById, addBook, editBook, removeBook };
+const issueBook = async (req, res) => {
+	const { bookId, userId } = req.body;
+	console.log(bookId, userId);
+	try {
+		const foundUser = await getUserById(userId);
+		if (!foundUser)
+			return res
+				.status(404)
+				.json({ message: "Couldn't find the user you searched for" });
+		if (!foundUser.verified)
+			return res.status(400).json({ message: "User is not verified" });
+		if (foundUser.booksIssued.length >= 3)
+			return res
+				.status(400)
+				.json({ message: "User has already issued 3 books" });
+		const foundBook = await Book.findById(bookId);
+		if (!foundBook)
+			return res.status(404).json({
+				message: "Couldn't find the book you searched for 127",
+			});
+		if (
+			foundBook.issuedTo.includes(userId) ||
+			foundUser.booksIssued.includes(bookId)
+		)
+			return res
+				.status(400)
+				.json({ message: "Book already issued to user" });
+		if (foundBook.copiesAvailableInLibrary === 0)
+			return res.status(409).json({
+				message: "No copies of this book are available in the library",
+			});
+		const updatedBook = await Book.findByIdAndUpdate(
+			bookId,
+			{
+				$inc: { copiesAvailableInLibrary: -1 },
+				$push: { issuedTo: userId },
+			},
+			{ new: true }
+		);
+		const updatedUser = await User.findByIdAndUpdate(
+			userId,
+			{ $push: { booksIssued: bookId } },
+			{ new: true }
+		);
+		return res.status(200).json({
+			message: "Book issued successfully",
+			updatedBook,
+			updatedUser,
+		});
+	} catch (error) {
+		console.error(error);
+		if (error.kind === "ObjectId")
+			return res.status(404).json({
+				message: "Couldn't find the book you searched for 155",
+			});
+		return res.status(500).json({ message: "Internal Server Error" });
+	}
+};
+
+const returnBook = async (req, res) => {
+	const { bookId, userId } = req.body;
+	try {
+		const foundUser = await getUserById(userId);
+		if (!foundUser)
+			return res.status(404).json({ message: "User not found" });
+		const foundBook = await Book.findById(bookId);
+		if (!foundBook)
+			return res.status(404).json({ message: "Book not found" });
+		if (
+			!foundBook.issuedTo.includes(userId) ||
+			!foundUser.booksIssued.includes(bookId)
+		)
+			return res.status(400).json({ message: "Book not issued to user" });
+		const updatedBook = await Book.findByIdAndUpdate(
+			bookId,
+			{
+				$inc: { copiesAvailableInLibrary: 1 },
+				$pull: { issuedTo: userId },
+			},
+			{ new: true }
+		);
+		const updatedUser = await User.findByIdAndUpdate(
+			userId,
+			{ $pull: { booksIssued: bookId } },
+			{ new: true }
+		);
+		return res.status(200).json({
+			message: "Book returned successfully",
+			updatedBook,
+			updatedUser,
+		});
+	} catch (error) {
+		console.error(error);
+		if (error.kind === "ObjectId")
+			return res.status(404).json({ message: "Book not found" });
+		return res.status(500).json({ message: "Internal Server Error" });
+	}
+};
+
+export {
+	getAllBooks,
+	getBookById,
+	addBook,
+	editBook,
+	removeBook,
+	issueBook,
+	returnBook,
+};

@@ -4,7 +4,9 @@ import {
 	editBook,
 	getAllBooks,
 	getBookById,
+	issueBook,
 	removeBook,
+	returnBook,
 } from "../controllers/books.mjs";
 import auth, { verifyUserRole } from "../middleware/auth.mjs";
 import { USER_ROLES } from "../models/User.mjs";
@@ -19,6 +21,8 @@ router.post(
 	verifyUserRole([USER_ROLES.ADMIN, USER_ROLES.LIBRARIAN]),
 	addBook
 );
+router.put("/issue", auth, verifyUserRole(USER_ROLES.LIBRARIAN), issueBook);
+router.put("/return", auth, verifyUserRole(USER_ROLES.LIBRARIAN), returnBook);
 router.put(
 	"/:id",
 	auth,
