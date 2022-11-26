@@ -17,6 +17,9 @@ const BookSchema = new mongoose.Schema(
 			type: String,
 			default: "https://m.media-amazon.com/images/I/81MmomTwghL.jpg",
 		},
+		category: {
+			type: String,
+		},
 		copies: {
 			type: Number,
 			required: true,
