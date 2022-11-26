@@ -13,6 +13,10 @@ const BookSchema = new mongoose.Schema(
 			type: Number,
 			required: true,
 		},
+		cover: {
+			type: String,
+			default: "https://m.media-amazon.com/images/I/81MmomTwghL.jpg",
+		},
 		copies: {
 			type: Number,
 			required: true,

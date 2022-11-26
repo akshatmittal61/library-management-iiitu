@@ -1,20 +1,19 @@
 import jwt from "jsonwebtoken";
 import { jwtSecret } from "../config/index.mjs";
 import { USER_ROLES } from "../models/User.mjs";
+import { getUserById } from "../services/user.mjs";
 
-const auth = (req, res, next) => {
+const auth = async (req, res, next) => {
 	const token = req.header("x-auth-token");
 	if (!token) return res.status(401).json({ message: "Login to continue" });
 	try {
 		const decoded = jwt.verify(token, jwtSecret);
 		req.user = decoded.user;
-		if (!req.user.verified)
-			return res
-				.status(401)
-				.json({
-					message:
-						"You are not verified, wait for admin to verify you",
-				});
+		const foundUser = await getUserById(req.user.id);
+		if (!foundUser.verified)
+			return res.status(401).json({
+				message: "You are not verified, wait for admin to verify you",
+			});
 		next();
 	} catch (err) {
 		console.error(err);
@@ -22,9 +21,10 @@ const auth = (req, res, next) => {
 	}
 };
 
-const isAdmin = (req, res, next) => {
+const isAdmin = async (req, res, next) => {
 	try {
-		if (req.user.role === USER_ROLES.ADMIN) next();
+		let foundUser = await getUserById(req.user.id);
+		if (foundUser.role === USER_ROLES.ADMIN) next();
 		else
 			return res.status(403).json({
 				message: "You are not authorized to access this route",
@@ -35,9 +35,10 @@ const isAdmin = (req, res, next) => {
 	}
 };
 
-const isLibrarian = (req, res, next) => {
+const isLibrarian = async (req, res, next) => {
 	try {
-		if (req.user.role === USER_ROLES.LIBRARIAN) next();
+		let foundUser = await getUserById(req.user.id);
+		if (foundUser.role === USER_ROLES.LIBRARIAN) next();
 		else
 			res.status(403).json({
 				message: "You are not authorized to access this route",
@@ -48,9 +49,10 @@ const isLibrarian = (req, res, next) => {
 	}
 };
 
-const isFaculty = (req, res, next) => {
+const isFaculty = async (req, res, next) => {
 	try {
-		if (req.user.role === USER_ROLES.FACULTY) next();
+		let foundUser = getUserById(req.user.id);
+		if (foundUser.role === USER_ROLES.FACULTY) next();
 		else
 			res.status(403).json({
 				message: "You are not authorized to access this route",
@@ -61,24 +63,26 @@ const isFaculty = (req, res, next) => {
 	}
 };
 
-const isStudent = (req, res, next) => {
+const isStudent = async (req, res, next) => {
 	try {
-		if (req.user.role === USER_ROLES.STUDENT) next();
+		let foundUser = await getUserById(req.user.id);
+		if (foundUser.role === USER_ROLES.STUDENT) next();
 		else
 			res.status(403).json({
 				message: "You are not authorized to access this route",
 			});
 	} catch (error) {
 		console.error(error);
-		return res.status(500).json({ message: "Internal Server Error" });
+		return res.status(500).json({ message: "Internal Server Errorasync" });
 	}
 };
 
-const verifyUserRole = (role) => (req, res, next) => {
+const verifyUserRole = (role) => async (req, res, next) => {
+	let foundUser = await getUserById(req.user.id);
 	try {
 		if (typeof role === "string") {
-			if (req.user.role === role) next();
-		} else if (role.includes(req.user.role)) next();
+			if (foundUser.role === role) next();
+		} else if (role.includes(foundUser.role)) next();
 		else
 			res.status(403).json({
 				message: "You are not authorized to access this route",

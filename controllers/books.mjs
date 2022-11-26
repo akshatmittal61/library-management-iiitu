@@ -27,9 +27,9 @@ const getBookById = async (req, res) => {
 	}
 };
 
-const addBook = async (req, res, next) => {
+const addBook = async (req, res) => {
 	try {
-		const { title, author, price, copies } = req.body;
+		const { title, author, price, cover, copies } = req.body;
 		if (!title || !author || !price)
 			return res
 				.status(400)
@@ -38,6 +38,9 @@ const addBook = async (req, res, next) => {
 			title,
 			author,
 			price,
+			cover: cover
+				? cover
+				: "https://m.media-amazon.com/images/I/81MmomTwghL.jpg",
 			copies: copies ? copies : 1,
 		});
 		await book.save();
@@ -54,7 +57,7 @@ const editBook = async (req, res) => {
 	const { id } = req.params;
 	try {
 		const { ...updatedFields } = req.body;
-		let foundBook = await Book.findById();
+		let foundBook = await Book.findById(id);
 		if (!foundBook)
 			return res
 				.status(404)

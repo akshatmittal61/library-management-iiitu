@@ -15,6 +15,10 @@ const register = async (req, res) => {
 				message: "User already registered. Login to continue",
 			});
 		}
+		if (role && !Object.values(USER_ROLES).includes(role))
+			return res
+				.status(400)
+				.json({ message: "Please select a valid role" });
 		user = new User({
 			name,
 			email,
