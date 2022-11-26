@@ -5,6 +5,7 @@ import connect from "./db/index.mjs";
 import apiAuth from "./routes/auth.mjs";
 import apiBooks from "./routes/books.mjs";
 import apiAdmin from "./routes/admin.mjs";
+import apiBookRequests from "./routes/book-requests.mjs";
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(cors("*"));
 app.use("/api/auth", apiAuth);
 app.use("/api/books", apiBooks);
 app.use("/api/admin", apiAdmin);
+app.use("/api/book-requests", apiBookRequests);
 
 app.listen(PORT, () => {
 	connect();
