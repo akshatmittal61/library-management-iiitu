@@ -1,7 +1,7 @@
 import { jwtSecret } from "../config/index.mjs";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import User from "../models/User.mjs";
+import User, { USER_ROLES } from "../models/User.mjs";
 
 const register = async (req, res) => {
 	const { name, email, phone, password, role } = req.body;
@@ -34,7 +34,7 @@ const register = async (req, res) => {
 			email,
 			phone,
 			password,
-			role,
+			role: role ? role : USER_ROLES.STUDENT,
 		});
 		const salt = await bcrypt.genSalt(10);
 		user.password = await bcrypt.hash(password, salt);
@@ -42,7 +42,7 @@ const register = async (req, res) => {
 		const payload = { user: { id: user.id } };
 		jwt.sign(payload, jwtSecret, { expiresIn: 3600000 }, (err, token) => {
 			if (err) throw err;
-			res.status(200).json({
+			return res.status(200).json({
 				token: token,
 				message: "User registered, login to continue",
 			});

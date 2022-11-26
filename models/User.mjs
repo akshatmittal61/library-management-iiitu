@@ -1,5 +1,12 @@
 import mongoose from "mongoose";
 
+export const USER_ROLES = {
+	ADMIN: "admin",
+	LIBRARIAN: "librarian",
+	FACULTY: "faculty",
+	STUDENT: "student",
+};
+
 const UserSchema = new mongoose.Schema(
 	{
 		name: {
@@ -20,10 +27,14 @@ const UserSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		verified: {
+			type: Boolean,
+			default: false,
+		},
 		role: {
 			type: String,
-			enum: ["student", "faculty", "librarian", "admin"],
-			default: "student",
+			enum: Object.values(USER_ROLES),
+			default: USER_ROLES.STUDENT,
 		},
 		booksIssued: [
 			{
