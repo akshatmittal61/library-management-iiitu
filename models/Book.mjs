@@ -9,10 +9,10 @@ const BookSchema = new mongoose.Schema(
 		author: {
 			type: String,
 		},
-        price: {
-            type: Number,
-            required: true,
-        },
+		price: {
+			type: Number,
+			required: true,
+		},
 		copies: {
 			type: Number,
 			required: true,
@@ -23,6 +23,12 @@ const BookSchema = new mongoose.Schema(
 			required: true,
 			default: 1,
 		},
+		issuedTo: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "User",
+			},
+		],
 	},
 	{ timestamps: true }
 );

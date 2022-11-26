@@ -4,6 +4,7 @@ import { PORT } from "./config/index.mjs";
 import connect from "./db/index.mjs";
 import apiAuth from "./routes/auth.mjs";
 import apiBooks from "./routes/books.mjs";
+import apiAdmin from "./routes/admin.mjs";
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(cors("*"));
 
 app.use("/api/auth", apiAuth);
 app.use("/api/books", apiBooks);
+app.use("/api/admin", apiAdmin);
 
 app.listen(PORT, () => {
 	connect();
