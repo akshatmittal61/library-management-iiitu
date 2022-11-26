@@ -70,5 +70,20 @@ const isStudent = (req, res, next) => {
 	}
 };
 
+const verifyUserRole = (role) => (req, res, next) => {
+	try {
+		if (typeof role === "string") {
+			if (req.user.role === role) next();
+		} else if (role.includes(req.user.role)) next();
+		else
+			res.status(403).json({
+				message: "You are not authorized to access this route",
+			});
+	} catch (error) {
+		console.error(error);
+		return res.status(500).json({ message: "Internal Server Error" });
+	}
+};
+
 export default auth;
-export { isAdmin, isLibrarian, isFaculty, isStudent };
+export { isAdmin, isLibrarian, isFaculty, isStudent, verifyUserRole };
