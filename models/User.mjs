@@ -45,6 +45,12 @@ const UserSchema = new mongoose.Schema(
 			type: Number,
 			default: 0,
 		},
+		notifications: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "Notification",
+			},
+		],
 	},
 	{ timestamps: true }
 );

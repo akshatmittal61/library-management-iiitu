@@ -1,3 +1,4 @@
+import Notification, { NOTIFICATION_TYPES } from "../models/Notification.mjs";
 import User from "../models/User.mjs";
 
 const verifyUserByAdmin = async (req, res) => {
@@ -16,11 +17,19 @@ const verifyUserByAdmin = async (req, res) => {
 				{ $set: { role: updatedUser.role, verified: true } },
 				{ new: true }
 			);
+			const newNotificaion = new Notification({
+				title: `Welcome onboard`,
+				message: `Welcome ${user.name} on LMS IIITU, explore what you can do`,
+				type: NOTIFICATION_TYPES.SUCCESS,
+				user: userId,
+			});
+			newNotificaion.save();
 			return res.status(202).json({
 				user,
 				message: `User verified as ${
 					updatedUser.role ? updatedUser.role : user.role
 				}`,
+				notification: newNotificaion,
 			});
 		} else {
 			await User.findByIdAndDelete(userId);

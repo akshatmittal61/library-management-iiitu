@@ -1,4 +1,5 @@
 import Book from "../models/Book.mjs";
+import Notification, { NOTIFICATION_TYPES } from "../models/Notification.mjs";
 import User from "../models/User.mjs";
 import { getUserById } from "../services/user.mjs";
 
@@ -149,10 +150,18 @@ const issueBook = async (req, res) => {
 			{ $push: { booksIssued: bookId } },
 			{ new: true }
 		);
+		const newNotificaion = new Notification({
+			title: "New Book Issued",
+			message: `${foundBook.title} has been issued to you`,
+			type: NOTIFICATION_TYPES.SUCCESS,
+			user: userId,
+		});
+		newNotificaion.save();
 		return res.status(200).json({
 			message: "Book issued successfully",
 			updatedBook,
 			updatedUser,
+			notification: newNotificaion,
 		});
 	} catch (error) {
 		console.error(error);
@@ -191,10 +200,18 @@ const returnBook = async (req, res) => {
 			{ $pull: { booksIssued: bookId } },
 			{ new: true }
 		);
+		const newNotificaion = new Notification({
+			title: "Book returned",
+			message: `${foundBook.title} has been returned to the library`,
+			type: NOTIFICATION_TYPES.SUCCESS,
+			user: userId,
+		});
+		newNotificaion.save();
 		return res.status(200).json({
 			message: "Book returned successfully",
 			updatedBook,
 			updatedUser,
+			notification: newNotificaion,
 		});
 	} catch (error) {
 		console.error(error);
