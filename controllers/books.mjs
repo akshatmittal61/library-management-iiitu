@@ -108,7 +108,6 @@ const removeBook = async (req, res) => {
 
 const issueBook = async (req, res) => {
 	const { bookId, userId } = req.body;
-	console.log(bookId, userId);
 	try {
 		const foundUser = await getUserById(userId);
 		if (!foundUser)
@@ -124,7 +123,7 @@ const issueBook = async (req, res) => {
 		const foundBook = await Book.findById(bookId);
 		if (!foundBook)
 			return res.status(404).json({
-				message: "Couldn't find the book you searched for 127",
+				message: "Couldn't find the book you searched for",
 			});
 		if (
 			foundBook.issuedTo.includes(userId) ||
@@ -167,7 +166,7 @@ const issueBook = async (req, res) => {
 		console.error(error);
 		if (error.kind === "ObjectId")
 			return res.status(404).json({
-				message: "Couldn't find the book you searched for 155",
+				message: "Couldn't find the book you searched for",
 			});
 		return res.status(500).json({ message: "Internal Server Error" });
 	}

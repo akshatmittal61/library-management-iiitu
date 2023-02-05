@@ -1,4 +1,38 @@
 button {
     all: unset;
     cursor: pointer;
+    user-select: none;
+}
+
+.btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    padding: 0.5rem 0.875rem;
+    outline: 1.5px solid var(--black);
+    line-height: 125%;
+    color: var(--black);
+
+    &-outline {
+        background-color: transparent;
+        color: var(--black);
+    }
+
+    background-color: var(--black);
+    color: var(--white);
+
+    &-lg {
+        font-size: 1.25rem;
+        padding: 1rem 1.5rem;
+    }
+
+    &-sm {
+        font-size: 1rem;
+        padding: 0.25rem 0.5rem;
+    }
+
+    .material-symbols-outlined {
+        margin-left: 0.5rem;
+    }
 }

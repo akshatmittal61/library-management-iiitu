@@ -23,7 +23,11 @@ const Button = ({
 	if (color) classes += ` btn-${color}`;
 	if (size === "small") classes += " btn-sm";
 	else if (size === "large") classes += " btn-lg";
-	if (variant === "fill" || variant === "outline")
+	if (
+		variant?.includes("fill") ||
+		variant?.includes("contain") ||
+		variant?.includes("outline")
+	)
 		classes += ` btn-${variant}`;
 	return (
 		<button
@@ -37,8 +41,8 @@ const Button = ({
 					: onClick
 			}
 		>
-			{icon !== "" && <MaterialIcons>{icon}</MaterialIcons>}
 			{text}
+			{icon !== "" && <MaterialIcons>{icon}</MaterialIcons>}
 		</button>
 	);
 };
